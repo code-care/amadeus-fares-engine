@@ -1,0 +1,19 @@
+{
+  "name": "code-care-poland/amadeus-fares-engine",
+  "license": "private",
+  "description": "Public microservice which support searching for fares in amadeus",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Amadeus\\": "src/"
+    }
+  },
+  "require": {
+    "catfan/medoo": "^1.7",
+    "slim/slim": "4.*",
+    "guzzlehttp/psr7": "^1.6",
+    "http-interop/http-factory-guzzle": "^1.0",
+    "ext-json": "*"
+  }
+}
