@@ -2,8 +2,12 @@
 
 namespace App;
 
+use App\Provider\ConfigProvider;
 use App\Provider\ControllerProvider;
+use App\Provider\ServiceProvider;
+use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
+use DI\Container;
 
 class Kernel
 {
@@ -12,9 +16,17 @@ class Kernel
 
     public function __construct()
     {
+        $container = new Container();
+        AppFactory::setContainer($container);
+
         $this->app = AppFactory::create();
 
-        $app[ControllerProvider::class] = new ControllerProvider($this->app);
+        $appContainer = $this->app->getContainer();
+
+        $appContainer->set(ConfigProvider::class, new ConfigProvider($appContainer));
+        ServiceProvider::register($appContainer);
+
+        ControllerProvider::register($this->app);
     }
 
     public function run()

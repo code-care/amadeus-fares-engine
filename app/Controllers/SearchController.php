@@ -3,10 +3,11 @@
 namespace App\Controllers;
 
 use Amadeus\Base\BaseController;
+use Amadeus\Input\SearchInput;
 use Amadeus\Service\AmadeusService\Amadeus;
 use Psr\Container\ContainerInterface;
 
-class IndexController extends BaseController
+class SearchController extends BaseController
 {
     /**
      * @var Amadeus
@@ -27,6 +28,8 @@ class IndexController extends BaseController
 
     public function run()
     {
+        $searchInput = SearchInput::create($this->request);
+
         $result = $this->amadeus->fetchFares();
         $arr = [
             'status' => 'ok',
