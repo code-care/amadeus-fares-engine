@@ -30,7 +30,7 @@ class SearchController extends BaseController
     {
         $searchInput = SearchInput::create($this->request);
 
-        $result = $this->amadeus->fetchFares();
+        $result = $this->amadeus->fetchFares($searchInput);
         $arr = [
             'status' => 'ok',
             'data' => $result

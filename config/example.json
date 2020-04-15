@@ -2,7 +2,8 @@
   "service": {
     "amadeus": {
       "key": "****",
-      "secret": "***"
+      "secret": "***",
+      "domain": "https://test.api.amadeus.com/v2/"
     }
   }
 }

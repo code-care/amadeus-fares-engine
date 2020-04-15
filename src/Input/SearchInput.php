@@ -36,7 +36,7 @@ class SearchInput
      */
     private $limit;
     /**
-     * @var array
+     * @var array|null
      */
     private $airlines;
 
@@ -80,17 +80,82 @@ class SearchInput
      */
     public static function create(Request $request)
     {
-        $returnDate = is_null($request->getAttribute('returnDate', null)) ? null : new DateTime($request->getAttribute('returnDate'));
+        $params = $request->getQueryParams();
+        $returnDate = !isset($params['returnDate']) ? null : new DateTime($params['returnDate']);
         return new SearchInput(
-            $request->getAttribute('origin'),
-            $request->getAttribute('destination'),
-            new DateTime($request->getAttribute('departureDate')),
+            $params['origin'],
+            $params['destination'],
+            new DateTime($params['departureDate']),
             $returnDate,
-            $request->getAttribute('adults'),
-            $request->getAttribute('children'),
-            $request->getAttribute('limit'),
-            $request->getAttribute('airlines', null)
+            (int)$params['adults'],
+            (int)$params['children'],
+            (int)$params['limit'],
+            !isset($params['airlines']) ? null : $params['airlines']
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrigin(): string
+    {
+        return $this->origin;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDestination(): string
+    {
+        return $this->destination;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDepartureDate(): DateTime
+    {
+        return $this->departureDate;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getReturnDate(): ?DateTime
+    {
+        return $this->returnDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAdults(): int
+    {
+        return $this->adults;
+    }
+
+    /**
+     * @return int
+     */
+    public function getChildren(): int
+    {
+        return $this->children;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimit(): int
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAirlines(): ?array
+    {
+        return $this->airlines;
     }
 
 }
